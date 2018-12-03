@@ -1,5 +1,7 @@
-const request = require('request');
 const yargs = require('yargs');
+const geocode = require('./geocode/geocode');
+const weather = require('./geocode/weather')
+
 
 const argv = yargs.options({
     a:{
@@ -11,11 +13,13 @@ const argv = yargs.options({
 }).help()
 .alias('help','h').argv;
 
-var encodedURI = encodeURIComponent(argv.address);
+geocode.geocodeAddress(argv.address, (errorMsg , results) => {
+  if(errorMsg){
+    console.log(errorMsg)
+  } else {
 
-request({
-  url: 'http://www.mapquestapi.com/geocoding/v1/address?key=zMVp5TwxSTxGpKG9rDGvXZ0vRaLzLfbE&location=${encodedURI}',
-  json: true
-}, (error, response, body) => {
-  console.log(JSON.stringify(body));
+    console.log(JSON.stringify(results, undefined, 2));
+  }
+
 });
+//322eb8c20e982f170398e83cc6ead804
