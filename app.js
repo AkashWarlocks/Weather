@@ -17,8 +17,15 @@ geocode.geocodeAddress(argv.address, (errorMsg , results) => {
   if(errorMsg){
     console.log(errorMsg)
   } else {
-
     console.log(JSON.stringify(results, undefined, 2));
+    weather.weatherDetails(results.latitude,results.longitude, (weatherError, weatherResults)=>{
+      if (weatherError){
+        console.log(weatherError)
+      } else {
+        console.log(JSON.stringify(weatherResults, undefined,2) )
+      }
+
+    })
   }
 
 });
